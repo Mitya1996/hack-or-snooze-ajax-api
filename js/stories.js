@@ -37,7 +37,7 @@ function generateStoryMarkup(story) {
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
-function putStoriesOnPage() {
+function putStoriesOnPage(evt) {
   console.debug("putStoriesOnPage");
 
   $allStoriesList.empty();
@@ -50,3 +50,17 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+async function createNewStory(evt){
+  console.debug("createNewStory");
+  evt.preventDefault();
+
+  let title = $("#submitTitle").val();
+  let author = $("#submitAuthor").val();
+  let url = $("#submitUrl").val();
+  
+  await storyList.addStory(currentUser, {title, author, url});
+  putStoriesOnPage();
+}
+
+$newStoryForm.on("submit", createNewStory)

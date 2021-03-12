@@ -91,7 +91,7 @@ class StoryList {
 
     }catch(e){
       console.log(e.message);
-      alert(e.message)
+      alert(e.message + ".\nTry adding 'https://' before url.")
     }
 
   }
