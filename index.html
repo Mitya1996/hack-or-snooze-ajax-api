@@ -37,6 +37,11 @@
   <div class="navbar-brand">
     <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
   </div>
+  <div class="nav-left">
+    <span>&nbsp;&nbsp;| </span>
+    <a class="nav-link" href="#" id="nav-submit">submit</a>
+    <span> | </span>
+  </div>
   <div class="nav-right">
     <a class="nav-link" href="#" id="nav-login">login/signup</a>
     <a class="nav-link" href="#" id="nav-user-profile"></a>
@@ -44,8 +49,31 @@
   </div>
 </nav>
 
+
+
 <!-- area for stories (all stories, user stories, favorites) -->
 <section class="stories-container container">
+
+  <!-- submit new story form -->
+  <form action="submit" id="new-story-form" class="hidden">
+    <div class="login-input">
+      <label for="Title">Title</label>
+      <input type="text" required>
+    </div>
+    
+    <div class="login-input">
+      <label for="Author">Author</label>
+      <input type="text" required>
+    </div>
+
+    <div class="login-input">
+      <label for="Url">Url</label>
+      <input type="text" required>
+    </div>
+
+    <button type="submit">Submit</button>
+
+  </form>
 
   <!-- loading message (removed by JS after stories loaded) -->
   <div id="stories-loading-msg">Loading&hellip;</div>

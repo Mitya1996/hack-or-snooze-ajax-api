@@ -9,6 +9,9 @@ const $allStoriesList = $("#all-stories-list");
 
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
+const $newStoryForm = $("#new-story-form"); //new story that opens when clicking submit
+
+const $navSubmit = $("#nav-submit"); //submit button that opens new story form
 
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
@@ -24,6 +27,7 @@ function hidePageComponents() {
     $allStoriesList,
     $loginForm,
     $signupForm,
+    $newStoryForm,
   ];
   components.forEach(c => c.hide());
 }
