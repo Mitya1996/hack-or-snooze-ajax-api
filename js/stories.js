@@ -111,6 +111,23 @@ function putFavoritesOnPage(evt) {
 }
 
 
+function putMyStoriesOnPage(evt) {
+  console.debug("putMyStoriesOnPage");
+
+  $allStoriesList.empty();
+  if (currentUser.ownStories.length === 0) {
+    $allStoriesList.append('<h3>No stories added by user yet!</h3>')
+  } else{
+    // loop through all of our stories and generate HTML for them
+    for (let story of currentUser.ownStories) {
+      const $story = generateStoryMarkup(story);
+      $allStoriesList.append($story);
+    }
+  }
+  $allStoriesList.show();
+}
+
+
 async function createNewStory(evt){
   console.debug("createNewStory");
   evt.preventDefault();

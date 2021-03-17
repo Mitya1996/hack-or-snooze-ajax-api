@@ -13,6 +13,7 @@ const $newStoryForm = $("#new-story-form"); //new story that opens when clicking
 
 const $navSubmit = $("#nav-submit"); //submit button that opens new story form
 const $navFavorites = $("#nav-favorites");
+const $navMyStories = $("#nav-mystories");
 
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
