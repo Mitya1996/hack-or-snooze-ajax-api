@@ -93,6 +93,24 @@ function putStoriesOnPage(evt) {
   $allStoriesList.show();
 }
 
+
+function putFavoritesOnPage(evt) {
+  console.debug("putFavoritesOnPage");
+
+  $allStoriesList.empty();
+  if (currentUser.favorites.length === 0) {
+    $allStoriesList.append('<h3>No favorites added!</h3>')
+  } else{
+    // loop through all of our stories and generate HTML for them
+    for (let favorite of currentUser.favorites) {
+      const $favStory = generateStoryMarkup(favorite);
+      $allStoriesList.append($favStory);
+    }
+  }
+  $allStoriesList.show();
+}
+
+
 async function createNewStory(evt){
   console.debug("createNewStory");
   evt.preventDefault();

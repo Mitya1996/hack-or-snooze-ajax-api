@@ -12,6 +12,7 @@ const $signupForm = $("#signup-form");
 const $newStoryForm = $("#new-story-form"); //new story that opens when clicking submit
 
 const $navSubmit = $("#nav-submit"); //submit button that opens new story form
+const $navFavorites = $("#nav-favorites");
 
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
