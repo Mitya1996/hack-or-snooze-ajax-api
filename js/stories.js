@@ -19,7 +19,7 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
+function generateStoryMarkup(story, showDltBtn = false) {
   // console.debug("generateStoryMarkup", story);
   const showStar = Boolean(currentUser);
 
@@ -28,6 +28,8 @@ function generateStoryMarkup(story) {
   return $(`
       <li id="${story.storyId}" class="closest-story">
         ${showStar ? getStarHTML(story, currentUser) : ""}
+        ${showDltBtn ? getTrashCanHTML() : ""}
+
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -39,14 +41,17 @@ function generateStoryMarkup(story) {
 }
 
 /** Make favorite/not-favorite star for story */
-
 function getStarHTML(story, user) {
   const isFavorite = user.isFavorite(story);
   const starType = isFavorite ? "fas" : "far";
   return `
       <span class="star">
-        <i class="${starType} fa-star"></i>
+        <i class="${starType} fa-star fave-star"></i>
       </span>`;
+}
+
+function getTrashCanHTML() {
+  return '<span><i class="fas fa-trash-alt trash-can" aria-label="delete"></i></span>'
 }
 
 async function handleStarClick() {
@@ -74,12 +79,23 @@ async function handleStarClick() {
 
 }
 
-$allStoriesList.on("click", ".fa-star", handleStarClick);
+$allStoriesList.on("click", ".fave-star", handleStarClick);
 
+async function handleTrashClick() {
+  //get story id from target
+  const storyId = this.closest('.closest-story').id;
+  
+  await storyList.removeStory(currentUser, storyId);
+
+  $(this).closest('.closest-story').remove();
+
+}
+
+$allStoriesList.on("click", ".trash-can", handleTrashClick);
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
-function putStoriesOnPage(evt) {
+function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
 
   $allStoriesList.empty();
@@ -94,7 +110,7 @@ function putStoriesOnPage(evt) {
 }
 
 
-function putFavoritesOnPage(evt) {
+function putFavoritesOnPage() {
   console.debug("putFavoritesOnPage");
 
   $allStoriesList.empty();
@@ -111,7 +127,7 @@ function putFavoritesOnPage(evt) {
 }
 
 
-function putMyStoriesOnPage(evt) {
+function putMyStoriesOnPage() {
   console.debug("putMyStoriesOnPage");
 
   $allStoriesList.empty();
@@ -120,7 +136,7 @@ function putMyStoriesOnPage(evt) {
   } else{
     // loop through all of our stories and generate HTML for them
     for (let story of currentUser.ownStories) {
-      const $story = generateStoryMarkup(story);
+      const $story = generateStoryMarkup(story, true); //showDltBtn = true
       $allStoriesList.append($story);
     }
   }
