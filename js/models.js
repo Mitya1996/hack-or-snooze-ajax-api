@@ -213,4 +213,27 @@ class User {
       return null;
     }
   }
+
+  async addFavorite(story) {
+    const response = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      method: "POST",
+      data: { token: this.loginToken },
+    });
+    this.favorites.push(story);
+  }
+
+  async removeFavorite(story) {
+    const response = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      method: "DELETE",
+      data: { token: this.loginToken },
+    });
+    this.favorites = this.favorites.filter(s => s.storyId != story.storyId);
+  }
+
+  isFavorite(story) {
+    return this.favorites.some(s => (s.storyId === story.storyId));
+  }
+
 }
