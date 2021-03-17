@@ -26,7 +26,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
 
   return $(`
-      <li id="${story.storyId}">
+      <li id="${story.storyId}" class="closest-story">
         ${showStar ? getStarHTML(story, currentUser) : ""}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
@@ -48,6 +48,33 @@ function getStarHTML(story, user) {
         <i class="${starType} fa-star"></i>
       </span>`;
 }
+
+async function handleStarClick() {
+  //get story object from target
+  const storyId = this.closest('.closest-story').id;
+  const story = storyList.stories.find(s => s.storyId === storyId);
+  
+  //if the story is not a favorite, favorite
+  if (!currentUser.isFavorite(story)) {
+    //addFavorite
+    await currentUser.addFavorite(story);
+    //update star class
+    $(this).removeClass('far fas');
+    $(this).addClass('fas');
+
+    //if the story is a favorite, unfavorite
+  } else { 
+
+    await currentUser.removeFavorite(story);
+
+    //update star class
+    $(this).removeClass('far fas');
+    $(this).addClass('far');
+  }
+
+}
+
+$allStoriesList.on("click", ".fa-star", handleStarClick);
 
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
@@ -78,4 +105,4 @@ async function createNewStory(evt){
   putStoriesOnPage();
 }
 
-$newStoryForm.on("submit", createNewStory)
+$newStoryForm.on("submit", createNewStory);
