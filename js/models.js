@@ -73,9 +73,9 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( user, {title, author, url} ) {
+  async addStory(user, {title, author, url}) {
     // UNIMPLEMENTED: complete this function!
-    try{
+    try {
       const response = await axios({
         url: `${BASE_URL}/stories`,
         method: "POST",
@@ -89,11 +89,33 @@ class StoryList {
       user.ownStories.unshift(story);
       return story;
 
-    }catch(e){
+    } catch(e) {
       console.log(e.message);
       alert(e.message + ".\nTry adding 'https://' before url.")
     }
 
+  }
+
+  async removeStory(user, storyId) {
+    try{
+      const response = await axios({
+        url: `${BASE_URL}/stories/${storyId}`,
+        method: "DELETE",
+        data: { 
+          token: user.loginToken,
+        }
+      });
+      this.stories = this.stories.filter(s => s.storyId != storyId);
+      user.ownStories = user.ownStories.filter(s => s.storyId != storyId);
+
+      //notify user
+      console.log(response.data.message);
+      alert(response.data.message);
+
+    } catch(e) {
+      console.log(e.message);
+      alert(e.message)
+    }
   }
 
 }
