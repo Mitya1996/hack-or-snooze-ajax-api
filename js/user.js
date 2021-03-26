@@ -112,7 +112,7 @@ function updateUIOnUserLogin() {
 
   hidePageComponents();
 
-  $allStoriesList.show();
-
+  putStoriesOnPage();
+  
   updateNavOnLogin();
 }
