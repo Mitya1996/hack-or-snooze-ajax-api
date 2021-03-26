@@ -108,6 +108,7 @@ class StoryList {
       });
       this.stories = this.stories.filter(s => s.storyId != storyId);
       user.ownStories = user.ownStories.filter(s => s.storyId != storyId);
+      user.favorites = user.favorites.filter(s => s.storyId != storyId);
 
       //notify user
       console.log(response.data.message);
